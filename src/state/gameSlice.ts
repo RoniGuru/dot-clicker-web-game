@@ -5,6 +5,7 @@ interface game {
   level: number;
   timer: number;
   dots: boolean[];
+  highScore: number;
 }
 
 const initialState: game = {
@@ -12,6 +13,7 @@ const initialState: game = {
   level: 1,
   timer: 20,
   dots: [false, false, false, false],
+  highScore: 0,
 };
 
 const gameSlice = createSlice({
@@ -22,8 +24,10 @@ const gameSlice = createSlice({
     startGame: () => {},
     endGame: () => {},
     setDot: () => {},
+    setHighScore: () => {},
   },
 });
 
-export const { resetDots, startGame, endGame, setDot } = gameSlice.actions;
+export const { resetDots, startGame, endGame, setDot, setHighScore } =
+  gameSlice.actions;
 export default gameSlice.reducer;
