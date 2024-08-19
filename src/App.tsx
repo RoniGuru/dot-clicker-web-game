@@ -1,31 +1,34 @@
 import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages.tsx/home';
-import Login from './pages.tsx/login';
+import Home from './pages.tsx/Home';
+import Login from './pages.tsx/Login';
 import RootLayout from './components/layout';
+import { store } from './state/store';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <RootLayout>
-              <Home />
-            </RootLayout>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <RootLayout>
-              <Login />
-            </RootLayout>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <RootLayout>
+                <Home />
+              </RootLayout>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RootLayout>
+                <Login />
+              </RootLayout>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
