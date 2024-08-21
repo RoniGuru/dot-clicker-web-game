@@ -47,7 +47,15 @@ function Home() {
   }
 
   return (
-    <div className="flex justify-center flex-col items-center h-full mt-12">
+    <div className="flex justify-center flex-col items-center h-full ">
+      <div className="mt-4 flex   mb-4 text-2xl font-bold justify-around items-center w-1/3 ">
+        <div className="w-48">High Score : {game.highScore}</div>
+
+        <div className="h-24 w-24 rounded-full border-black border-8  flex justify-center items-center text-2xl font-bold  ">
+          {seconds}
+        </div>
+        <div className="w-48"> Score :{score}</div>
+      </div>
       <div className="w-2/3 bg-blue-500 box">
         <div
           className={`${
@@ -58,32 +66,34 @@ function Home() {
         ></div>
       </div>
       <div className="flex flex-col gap-2 justify-center">
-        <div>high score : {game.highScore}</div>
-        <div>score :{score}</div>
-        <div>seconds :{seconds} </div>
-        <div>game {game.start ? 'true' : 'false'}, </div>
-
-        <button
-          onClick={() => {
-            dispatch(startGame());
-            setScore(0);
-            randomPosition();
-            setActive(true);
-          }}
-          className="bg-red-400 px-7 py-3 rounded hover:opacity-50"
-        >
-          start
-        </button>
-        <button
-          onClick={() => {
-            dispatch(endGame(score));
-            setActive(false);
-            setSeconds(0);
-          }}
-          className="bg-red-400 px-7 py-3 rounded hover:opacity-50"
-        >
-          end
-        </button>
+        <div className="flex justify-center flex-col"></div>
+        <div className="flex gap-4 ">
+          <button
+            onClick={() => {
+              dispatch(startGame());
+              setScore(0);
+              randomPosition();
+              setActive(true);
+            }}
+            className={`${
+              game.start ? 'bg-green-400' : 'bg-blue-400'
+            } px-10 py-6 rounded hover:opacity-50`}
+          >
+            start
+          </button>
+          <button
+            onClick={() => {
+              dispatch(endGame(score));
+              setActive(false);
+              setSeconds(0);
+            }}
+            className={`${
+              game.start ? 'bg-red-400' : 'bg-blue-400'
+            } px-10 py-6 rounded hover:opacity-50`}
+          >
+            end
+          </button>
+        </div>
       </div>
     </div>
   );
