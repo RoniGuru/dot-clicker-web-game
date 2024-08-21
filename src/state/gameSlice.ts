@@ -28,8 +28,11 @@ const gameSlice = createSlice({
         state.highScore = action.payload;
       }
     },
+    setHighScore: (state, action: PayloadAction<number>) => {
+      state.highScore = action.payload;
+    },
   },
 });
 
-export const { startGame, endGame } = gameSlice.actions;
+export const { startGame, endGame, setHighScore } = gameSlice.actions;
 export default gameSlice.reducer;

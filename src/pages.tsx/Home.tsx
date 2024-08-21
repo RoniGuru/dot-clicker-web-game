@@ -1,7 +1,7 @@
 import { RootState } from '../state/store';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { startGame, endGame } from '../state/gameSlice';
+import { startGame, endGame, setHighScore } from '../state/gameSlice';
 
 function Home() {
   const game = useSelector((state: RootState) => state.game);
@@ -13,6 +13,10 @@ function Home() {
   const [y, setY] = useState<number>(0);
 
   const [active, setActive] = useState<boolean>(false);
+
+  useEffect(() => {
+    getHighScoreLocal();
+  }, [game.highScore]);
 
   useEffect(() => {
     if (seconds < game.timer && game.start) {
@@ -28,6 +32,7 @@ function Home() {
       setActive(false);
       setScore(0);
       setSeconds(0);
+      localStorage.setItem('highScore', JSON.stringify(game.highScore));
     }
   }, [seconds, game.start]);
 
@@ -38,6 +43,11 @@ function Home() {
     setTimeout(() => {
       setActive(true);
     }, 200);
+  }
+
+  function getHighScoreLocal() {
+    const savedHighScore = Number(localStorage.getItem('highScore'));
+    if (savedHighScore) dispatch(setHighScore(savedHighScore));
   }
 
   function randomPosition() {
@@ -59,7 +69,9 @@ function Home() {
       <div className="w-2/3 bg-blue-500 box">
         <div
           className={`${
-            active ? 'bg-red-300 h-16 w-16 cursor-pointer' : 'invisible'
+            active && game.start
+              ? 'bg-red-300 h-16 w-16 cursor-pointer'
+              : 'invisible'
           } rounded-full relative transition-all duration-100 ease-out`}
           style={{ left: `${x}%`, top: `${y}%` }}
           onClick={() => setDot()}
