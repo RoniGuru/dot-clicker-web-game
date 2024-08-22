@@ -7,7 +7,7 @@ interface game {
   highScore: number;
 }
 
-const initialState: game = {
+export const initialState: game = {
   start: false,
   level: 1,
   timer: 20,
@@ -22,11 +22,8 @@ const gameSlice = createSlice({
     startGame: (state) => {
       state.start = true;
     },
-    endGame: (state, action: PayloadAction<number>) => {
+    endGame: (state) => {
       state.start = false;
-      if (action.payload > state.highScore) {
-        state.highScore = action.payload;
-      }
     },
     setHighScore: (state, action: PayloadAction<number>) => {
       state.highScore = action.payload;
