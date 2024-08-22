@@ -5,3 +5,18 @@
 .box {
   height: 40rem;
 }
+
+.bg-color {
+  background-color: #f7f7ef;
+}
+
+.button:hover {
+  background-color: black;
+  color: white;
+}
+
+.centerScore {
+  position: fixed;
+  top: 40%;
+  left: 41%;
+}

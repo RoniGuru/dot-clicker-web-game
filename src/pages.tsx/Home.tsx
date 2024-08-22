@@ -59,28 +59,67 @@ function Home() {
   }
 
   return (
-    <div className="flex justify-center flex-col items-center h-full  ">
-      <div className="mt-4 flex    text-2xl font-bold justify-around items-center w-full">
-        <div className="h-24 w-24 rounded-full border-black border-8  flex justify-center items-center text-2xl font-bold  ">
-          {seconds}
+    <div className="flex justify-center flex-col items-center h-full   ">
+      <div>
+        <h1
+          className={`${
+            game.start ? '' : 'text-8xl top-48 fixed left-4'
+          } text-4xl font-bold w-full text-center`}
+        >
+          Dot Clicker
+        </h1>
+        <div
+          className={` ${
+            game.start
+              ? 'mt-4 flex    text-2xl font-bold justify-around items-center w-full'
+              : 'hidden'
+          }`}
+        >
+          <div
+            className={` ${
+              game.start
+                ? 'h-24 w-24 rounded-full border-black border-8  flex justify-center items-center text-2xl font-bold'
+                : 'hidden'
+            }  `}
+          >
+            {seconds}
+          </div>
+        </div>
+        <div className="flex    text-2xl font-bold gap-48 text-center mb-4">
+          <div
+            className={`${
+              game.start ? 'w-48' : 'centerScore w-96 text-center '
+            }`}
+          >
+            High Score : {game.highScore}
+          </div>
+          <div className={`${game.start ? 'w-48' : 'hidden'}`}>
+            Score : {score}
+          </div>
         </div>
       </div>
-      <div className="flex    text-2xl font-bold gap-48 text-center mb-4">
-        <div className="w-48">High Score : {game.highScore}</div>
-        <div className="w-48"> Score : {score}</div>
-      </div>
-      <div className="w-2/3 bg-blue-500 box rounded-lg">
+      <div
+        className={`${
+          game.start ? 'border-black border-4' : 'hidden'
+        } w-2/3  box rounded-lg  transition-all duration-100 ease-out `}
+      >
         <div
           className={`${
             active && game.start
-              ? 'bg-red-300 h-16 w-16 cursor-pointer'
+              ? 'bg-black h-16 w-16 cursor-pointer'
               : 'invisible'
           } rounded-full relative transition-all duration-100 ease-out`}
           style={{ left: `${x}%`, top: `${y}%` }}
           onClick={() => setDot()}
         ></div>
       </div>
-      <div className="flex  gap-16 justify-center w-full   mt-12">
+      <div
+        className={`${
+          game.start
+            ? 'flex  gap-16 justify-center  mt-12'
+            : 'flex items-center justify-center min-h-screen '
+        }`}
+      >
         <button
           onClick={() => {
             dispatch(startGame());
@@ -89,10 +128,12 @@ function Home() {
             setActive(true);
           }}
           className={`${
-            game.start ? 'bg-green-400' : 'bg-blue-400'
-          } px-10 py-6 rounded hover:opacity-50`}
+            game.start
+              ? 'hidden'
+              : 'px-10 py-6 rounded button text-2xl font-bold border-2 border-black transition-all duration-100 ease-out'
+          } `}
         >
-          start
+          Start
         </button>
         <button
           onClick={() => {
@@ -101,10 +142,10 @@ function Home() {
             setSeconds(0);
           }}
           className={`${
-            game.start ? 'bg-red-400' : 'bg-blue-400'
-          } px-10 py-6 rounded hover:opacity-50`}
+            game.start ? '' : 'hidden'
+          } px-10 py-6 rounded button text-2xl font-bold border-2 border-black transition-all duration-100 ease-out`}
         >
-          end
+          End
         </button>
       </div>
     </div>
