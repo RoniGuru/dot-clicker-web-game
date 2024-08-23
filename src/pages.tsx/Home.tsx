@@ -54,8 +54,8 @@ function Home() {
   }
 
   function randomPosition() {
-    setX(Math.floor(Math.random() * 80) + 10);
-    setY(Math.floor(Math.random() * 80) + 10);
+    setX(Math.floor(Math.random() * 80) + 15);
+    setY(Math.floor(Math.random() * 80) + 15);
   }
 
   return (
