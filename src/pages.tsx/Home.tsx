@@ -143,7 +143,7 @@ function Home() {
           }}
           className={`${
             game.start ? '' : 'hidden'
-          } px-10 py-6 rounded button text-2xl font-bold border-2 border-black transition-all duration-100 ease-out`}
+          } px-10 py-6 rounded button text-2xl font-bold border-2 border-black transition-all duration-100 ease-out mb-8`}
         >
           End
         </button>
