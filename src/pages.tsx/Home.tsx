@@ -59,7 +59,7 @@ function Home() {
   }
 
   return (
-    <div className="flex justify-center flex-col items-center h-full   ">
+    <div className="flex justify-center flex-col items-center    ">
       <div>
         <h1
           className={`${
