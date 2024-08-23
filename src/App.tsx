@@ -2,7 +2,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages.tsx/Home';
 import Login from './pages.tsx/Login';
-import RootLayout from './components/layout';
+
 import { store } from './state/store';
 
 function App() {
