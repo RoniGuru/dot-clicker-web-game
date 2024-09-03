@@ -1,12 +1,13 @@
+import Navbar from './Navbar';
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className=" h-screen">
-      {/* <Navbar /> */}
-      <main>{children}</main>
+    <div className=" max-h-screen">
+      <Navbar />
+      <main className="flex-grow overflow-hidden">{children}</main>
     </div>
   );
 }

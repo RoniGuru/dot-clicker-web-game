@@ -6,14 +6,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: #f7f7ef;
 }
 
 .box {
   height: 40rem;
-}
-
-.bg-color {
-  background-color: #f7f7ef;
 }
 
 .button:hover {
