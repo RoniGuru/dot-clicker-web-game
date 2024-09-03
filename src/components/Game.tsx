@@ -27,11 +27,11 @@ const Game = ({ score, setScore }: gameProps) => {
 
   return (
     <div
-      className={`border-black border-4
-       w-2/3  box rounded-lg  transition-all duration-100 ease-out `}
+      className={`
+       w-2/3  box rounded-lg  transition-all duration-100 ease-out gameBox bg-red-100`}
     >
       <div
-        className={`bg-black h-16 w-16 cursor-pointer rounded-full relative transition-all duration-100 ease-out`}
+        className={`bg-black h-8 w-8 cursor-pointer rounded-full relative transition-all duration-100 ease-out`}
         style={{ left: `${x}%`, top: `${y}%` }}
         onClick={() => setDot()}
       ></div>

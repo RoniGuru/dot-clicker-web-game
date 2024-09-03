@@ -43,27 +43,25 @@ function Home() {
 
   return (
     <div className="flex flex-col items-center justify-between h-full  overflow-y-auto">
-      <div className="flex flex-col items-center w-full p-4">
+      <div className="flex flex-col items-center w-full p-4 justify-center bg-red-200">
         <h1
-          className={`text-4xl font-bold text-center ${
-            !game.start && 'text-8xl mb-8'
-          }`}
+          className={`text-8xl font-bold text-center ${
+            game.start && 'hidden'
+          } mb-16`}
         >
           Dot Clicker
         </h1>
         {game.start && (
-          <div className="mt-4 flex text-2xl font-bold justify-around items-center w-full">
+          <div className="mt-1 flex text-2xl font-bold justify-around items-center w-2/3">
+            <div className={`${game.start ? 'w-48' : 'w-96 text-center'}`}>
+              High Score: {game.highScore}
+            </div>
             <div className="h-24 w-24 rounded-full border-black border-8 flex justify-center items-center text-2xl font-bold">
               {seconds}
             </div>
+            <div className="w-48">Score: {score}</div>
           </div>
         )}
-        <div className="flex text-2xl font-bold gap-8 text-center mb-4">
-          <div className={`${game.start ? 'w-48' : 'w-96 text-center'}`}>
-            High Score: {game.highScore}
-          </div>
-          {game.start && <div className="w-48">Score: {score}</div>}
-        </div>
       </div>
       {game.start ? <Game score={score} setScore={setScore} /> : null}
 
@@ -86,7 +84,7 @@ function Home() {
               setActive(false);
               setSeconds(0);
             }}
-            className="px-10 py-6 rounded button text-2xl font-bold border-2 border-black transition-all duration-100 ease-out"
+            className="px-10 py-6 rounded button text-2xl font-bold border-2 border-black transition-all duration-100 ease-out mt-2"
           >
             End
           </button>

@@ -3,10 +3,10 @@ const Navbar = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   return (
     <>
-      <nav className="flex w-full items-center justify-between p-4 text-xl font-semibold bg-blue-300">
+      <nav className="flex w-full items-center justify-between p-4 text-l font-semibold bg-blue-300">
         <button
           onClick={() => setIsPopupOpen(true)}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Login
         </button>
@@ -23,7 +23,7 @@ const Popup = ({ onClose }: { onClose: () => void }) => (
       <p>This is where you'd put your login form.</p>
       <button
         onClick={onClose}
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        className="mt-4 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
         Close
       </button>

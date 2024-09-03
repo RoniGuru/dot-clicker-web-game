@@ -9,6 +9,9 @@
   background-color: #f7f7ef;
 }
 
+.gameBox {
+  max-height: 32rem;
+}
 .box {
   height: 40rem;
 }
