@@ -1,4 +1,5 @@
 import { useLayoutEffect, useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 import { REFRESH_TOKEN, ACCESS_TOKEN } from '../constants';
 import api from '../api';
 import { jwtDecode } from 'jwt-decode';
@@ -58,4 +59,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   if (isAuthorized === null) {
     return <div>Loading...</div>;
   }
+
+  return isAuthorized ? children : <Navigate to="/" />;
 }

@@ -6,9 +6,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+body {
   background-color: #f7f7ef;
 }
-
 .gameBox {
   max-height: 32rem;
 }
