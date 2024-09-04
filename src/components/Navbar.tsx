@@ -4,6 +4,7 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../state/store';
+import { setUser } from '../state/userSlice';
 
 interface loginData {
   accessToken: string;
@@ -14,13 +15,14 @@ interface loginData {
 const Navbar = () => {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
-
   const [login, setLogin] = useState<boolean>(true);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   return (
     <>
       <nav className="flex w-full items-center justify-between p-4 text-l font-semibold bg-blue-300">
+        <div onClick={() => console.log(user)}>user name {user.name}</div>
+
         <button
           onClick={() => setIsPopupOpen(true)}
           className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -52,6 +54,8 @@ const LoginPopup = ({
   setLogin: (value: boolean) => void;
 }) => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -66,6 +70,8 @@ const LoginPopup = ({
 
       localStorage.setItem(ACCESS_TOKEN, data.accessToken);
       localStorage.setItem(REFRESH_TOKEN, data.refreshToken);
+      console.log(data.user);
+      dispatch(setUser(data.user));
 
       navigate('/user');
 
