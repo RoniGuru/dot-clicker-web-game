@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import api from '../api';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants';
+import { api } from '../api';
+
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../state/store';
-import { setUser } from '../state/userSlice';
+import { AppDispatch } from '../state/store';
+import { logInUser, logOutUser } from '../state/userSlice';
 
-interface loginData {
+export interface loginData {
   accessToken: string;
   refreshToken: string;
   user: { id: number; name: string; score: number };
@@ -14,21 +15,28 @@ interface loginData {
 
 const Navbar = () => {
   const user = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch();
+
   const [login, setLogin] = useState<boolean>(true);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  async function handleLogOut() {
+    dispatch(logOutUser(user.id!));
+  }
   return (
     <>
       <nav className="flex w-full items-center justify-between p-4 text-l font-semibold bg-blue-300">
         <div onClick={() => console.log(user)}>user name {user.name}</div>
-
-        <button
-          onClick={() => setIsPopupOpen(true)}
-          className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Login
-        </button>
+        {user.id ? (
+          <button onClick={handleLogOut}>Log Out</button>
+        ) : (
+          <button
+            onClick={() => setIsPopupOpen(true)}
+            className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Login
+          </button>
+        )}
       </nav>
       {isPopupOpen &&
         (login ? (
@@ -55,27 +63,15 @@ const LoginPopup = ({
 }) => {
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
   async function handleLogin() {
     try {
-      const result = await api.post('/user/login', {
-        name: username,
-        password: password,
-      });
-
-      const data: loginData = result.data;
-
-      localStorage.setItem(ACCESS_TOKEN, data.accessToken);
-      localStorage.setItem(REFRESH_TOKEN, data.refreshToken);
-      console.log(data.user);
-      dispatch(setUser(data.user));
-
+      dispatch(logInUser({ username, password }));
       navigate('/user');
-
-      console.log(data);
+      onClose();
     } catch (error) {
       console.log('Error logging in:', error);
       alert('login details not valid');

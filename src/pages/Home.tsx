@@ -2,19 +2,21 @@ import { RootState } from '../state/store';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startGame, endGame, setHighScore } from '../state/gameSlice';
+import { AppDispatch } from '../state/store';
+import { updateUserScore } from '../state/userSlice';
 import Game from '../components/Game';
 
 function Home() {
   const game = useSelector((state: RootState) => state.game);
-  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch<AppDispatch>();
   const [seconds, setSeconds] = useState<number>(0);
-  const [score, setScore] = useState<number>(game.highScore);
+  const [score, setScore] = useState<number>(user.score);
   const [active, setActive] = useState<boolean>(false);
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    getHighScoreLocal();
-  }, [game.highScore]);
+    setScore(user.score);
+  }, []);
 
   useEffect(() => {
     if (seconds > 0 && game.start) {
@@ -28,6 +30,7 @@ function Home() {
       dispatch(endGame());
       if (score > game.highScore) {
         dispatch(setHighScore(score));
+        dispatch(updateUserScore({ user, score }));
       }
       setActive(false);
       setScore(0);

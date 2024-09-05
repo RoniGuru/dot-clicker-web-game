@@ -1,9 +1,9 @@
 import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages.tsx/Home';
+import Home from './pages/Home';
 
 import { store, persistor } from './state/store';
-import { AuthProvider } from './auth/authProvider';
+
 import RootLayout from './components/layout';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -16,11 +16,9 @@ function App() {
             <Route
               path="/user"
               element={
-                <AuthProvider>
-                  <RootLayout>
-                    <Home />
-                  </RootLayout>
-                </AuthProvider>
+                <RootLayout>
+                  <Home />
+                </RootLayout>
               }
             />
 
