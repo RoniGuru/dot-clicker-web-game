@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { api } from '../api';
-import { isRejectedWithValue } from '@reduxjs/toolkit';
+
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../state/store';

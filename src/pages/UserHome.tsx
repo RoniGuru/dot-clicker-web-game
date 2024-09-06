@@ -15,7 +15,6 @@ function UserHome() {
   const dispatch = useDispatch<AppDispatch>();
   const [seconds, setSeconds] = useState<number>(0);
   const [score, setScore] = useState<number>(user.score);
-  const [active, setActive] = useState<boolean>(false);
 
   useEffect(() => {
     if (user.id) {
@@ -39,7 +38,7 @@ function UserHome() {
         dispatch(setHighScore(score));
         dispatch(updateUserScore({ user, score }));
       }
-      setActive(false);
+
       setScore(0);
       setSeconds(game.timer);
       localStorage.setItem('highScore', JSON.stringify(game.highScore));
@@ -76,7 +75,6 @@ function UserHome() {
             onClick={() => {
               dispatch(startGame());
               setScore(0);
-              setActive(true);
             }}
             className="px-10 py-6 rounded button text-2xl font-bold border-2 border-black transition-all duration-100 ease-out"
           >
@@ -86,7 +84,7 @@ function UserHome() {
           <button
             onClick={() => {
               dispatch(endGame());
-              setActive(false);
+
               setSeconds(0);
             }}
             className="px-10 py-6 rounded button text-2xl font-bold border-2 border-black transition-all duration-100 ease-out mt-2"

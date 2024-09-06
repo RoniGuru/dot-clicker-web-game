@@ -53,7 +53,7 @@ export const logOutUser = createAsyncThunk(
   'user/logOutUser',
   async (id: number) => {
     try {
-      const result = await api.post('/user/logout', {
+      await api.post('/user/logout', {
         id: id,
       });
     } catch (err) {
