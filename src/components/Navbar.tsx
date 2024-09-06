@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { api } from '../api';
-
+import { isRejectedWithValue } from '@reduxjs/toolkit';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../state/store';
@@ -25,14 +25,14 @@ const Navbar = () => {
   }
   return (
     <>
-      <nav className="flex w-full items-center justify-between p-4 text-l font-semibold bg-blue-300">
-        <div onClick={() => console.log(user)}>user name {user.name}</div>
+      <nav className="flex w-full items-center justify-between p-4 text-l font-semibold ">
+        <div>{user.id ? `Welcome ${user.name}` : ''}</div>
         {user.id ? (
           <button onClick={handleLogOut}>Log Out</button>
         ) : (
           <button
             onClick={() => setIsPopupOpen(true)}
-            className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="px-4 py-1   rounded button font-bold border-2 border-black transition-all duration-100 ease-out"
           >
             Login
           </button>
@@ -69,12 +69,16 @@ const LoginPopup = ({
 
   async function handleLogin() {
     try {
-      dispatch(logInUser({ username, password }));
+      const result = await dispatch(logInUser({ username, password }));
+      console.log(result);
+      if (logInUser.rejected.match(result)) {
+        alert(`Login failed: ${result.payload || 'Unknown error'}`);
+      }
       navigate('/user');
       onClose();
-    } catch (error) {
-      console.log('Error logging in:', error);
-      alert('login details not valid');
+    } catch (error: any) {
+      console.error('Error logging in:', error);
+      alert('Login details not valid');
     }
   }
 
@@ -83,7 +87,7 @@ const LoginPopup = ({
       <div className="bg-white p-6 rounded-lg flex flex-col gap-2 justify-center w-80">
         <button
           onClick={onClose}
-          className="mt-4 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 justify-self-end  ml-auto"
+          className="mt-1 px-4 py-1  justify-self-end  ml-auto rounded button font-bold border-2 border-black transition-all duration-100 ease-out"
         >
           Close
         </button>
@@ -107,13 +111,13 @@ const LoginPopup = ({
         />
 
         <button
-          className="mt-4 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 "
+          className="mt-4 px-4 py-1 rounded button font-bold border-2 border-black transition-all duration-100 ease-out "
           onClick={handleLogin}
         >
           login
         </button>
         <button
-          className="mt-4 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 "
+          className="mt-4 px-4 py-1 rounded button font-bold border-2 border-black transition-all duration-100 ease-out "
           onClick={() => setLogin(true)}
         >
           No Account Register
@@ -162,7 +166,7 @@ const RegisterPopup = ({
       <div className="bg-white p-6 rounded-lg flex flex-col gap-2 justify-center w-80">
         <button
           onClick={onClose}
-          className="mt-4 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 justify-self-end  ml-auto "
+          className="mt-1 px-4 py-1 rounded button font-bold border-2 border-black transition-all duration-100 ease-out   ml-auto "
         >
           Close
         </button>
@@ -184,7 +188,7 @@ const RegisterPopup = ({
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <label htmlFor="confirmPassword">confirm password</label>
+        <label htmlFor="confirmPassword">Confirm password</label>
         <input
           type="password"
           className="border-black border-2"
@@ -194,13 +198,13 @@ const RegisterPopup = ({
         />
 
         <button
-          className="mt-4 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 "
+          className="mt-4 px-4 py-1 rounded button font-bold border-2 border-black transition-all duration-100 ease-out "
           onClick={handleRegister}
         >
           Register
         </button>
         <button
-          className="mt-4 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 "
+          className="mt-4 px-4 py-1 rounded button font-bold border-2 border-black transition-all duration-100 ease-out "
           onClick={() => setLogin(true)}
         >
           Already have a account Log In

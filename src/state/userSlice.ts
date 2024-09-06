@@ -20,7 +20,10 @@ export const initialState: user = {
 
 export const logInUser = createAsyncThunk(
   'user/logInUser',
-  async ({ username, password }: { username: string; password: string }) => {
+  async (
+    { username, password }: { username: string; password: string },
+    { rejectWithValue }
+  ) => {
     try {
       const result = await api.post('/user/login', {
         name: username,
@@ -37,10 +40,11 @@ export const logInUser = createAsyncThunk(
         refreshToken: data.refreshToken,
       };
 
-      return returnedUser;
-    } catch (err) {
-      console.log('problem logging in  user ', err);
-      throw err;
+      return returnedUser; // successful case
+    } catch (err: any) {
+      console.error('Problem logging in user:', err);
+
+      return rejectWithValue(err.response?.data);
     }
   }
 );

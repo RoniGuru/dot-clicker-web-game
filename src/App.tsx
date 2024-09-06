@@ -6,6 +6,7 @@ import { store, persistor } from './state/store';
 
 import RootLayout from './components/layout';
 import { PersistGate } from 'redux-persist/integration/react';
+import UserHome from './pages/UserHome';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
               path="/user"
               element={
                 <RootLayout>
-                  <Home />
+                  <UserHome />
                 </RootLayout>
               }
             />

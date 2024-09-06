@@ -5,8 +5,11 @@ import { startGame, endGame, setHighScore } from '../state/gameSlice';
 import { AppDispatch } from '../state/store';
 import { updateUserScore } from '../state/userSlice';
 import Game from '../components/Game';
+import { useNavigate } from 'react-router-dom';
 
-function Home() {
+function UserHome() {
+  const navigate = useNavigate();
+
   const game = useSelector((state: RootState) => state.game);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
@@ -15,7 +18,11 @@ function Home() {
   const [active, setActive] = useState<boolean>(false);
 
   useEffect(() => {
-    setScore(user.score);
+    if (user.id) {
+      setScore(user.score);
+    } else {
+      navigate('/');
+    }
   }, []);
 
   useEffect(() => {
@@ -92,4 +99,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default UserHome;
