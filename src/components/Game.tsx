@@ -6,18 +6,13 @@ interface gameProps {
 }
 
 const Game = ({ score, setScore }: gameProps) => {
-  const [active, setActive] = useState<boolean>(false);
-
   const [x, setX] = useState<number>(Math.floor(Math.random() * 80) + 15);
   const [y, setY] = useState<number>(Math.floor(Math.random() * 80) + 15);
 
   function setDot() {
-    setActive(false);
     randomPosition();
     setScore(score + 1);
-    setTimeout(() => {
-      setActive(true);
-    }, 100);
+    setTimeout(() => {}, 100);
   }
 
   function randomPosition() {

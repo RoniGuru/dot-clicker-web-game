@@ -26,7 +26,7 @@ tokenRoute.interceptors.request.use(
 
     if (decodedToken.exp) {
       if (decodedToken.exp * 1000 < currentDate.getTime()) {
-        const data = await refreshToken();
+        await refreshToken();
         config.headers['authorization'] = 'Bearer ' + user.accessToken;
       }
     }

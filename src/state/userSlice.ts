@@ -135,27 +135,15 @@ export const refreshUserAccessToken = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    setUser: (state, action: PayloadAction<user>) => {
-      console.log('set user');
-      return { ...action.payload };
-    },
-    logOutUser: (state) => {
-      state.id = null;
-      state.name = '';
-      state.score = 0;
-    },
-    updateUserScore: (state, action: PayloadAction<number>) => {
-      state.score = action.payload;
-    },
-    updateUserName: (state, action: PayloadAction<string>) => {
-      state.name = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(logInUser.fulfilled, (state, action: PayloadAction<user>) => {
-        return action.payload;
+        state.id = action.payload.id;
+        state.name = action.payload.name;
+        state.score = action.payload.score;
+        state.accessToken = action.payload.accessToken;
+        state.refreshToken = action.payload.refreshToken;
       })
       .addCase(logOutUser.fulfilled, (state) => {
         state.id = null;
