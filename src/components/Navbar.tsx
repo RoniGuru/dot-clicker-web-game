@@ -70,6 +70,7 @@ const LoginPopup = ({
   async function handleLogin() {
     try {
       const result = await dispatch(logInUser({ username, password }));
+
       console.log(result);
       if (logInUser.rejected.match(result)) {
         alert(`Login failed: ${result.payload || 'Unknown error'}`);

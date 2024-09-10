@@ -20,10 +20,7 @@ export const initialState: user = {
 
 export const logInUser = createAsyncThunk(
   'user/logInUser',
-  async (
-    { username, password }: { username: string; password: string },
-    { rejectWithValue }
-  ) => {
+  async ({ username, password }: { username: string; password: string }) => {
     try {
       const result = await api.post('/user/login', {
         name: username,
@@ -44,7 +41,7 @@ export const logInUser = createAsyncThunk(
     } catch (err: any) {
       console.error('Problem logging in user:', err);
 
-      return rejectWithValue(err.response?.data);
+      return err;
     }
   }
 );
