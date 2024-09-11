@@ -34,7 +34,9 @@ export const logInUser = createAsyncThunk(
           },
         }
       );
-
+      console.log('API URL:', import.meta.env.VITE_API_URL);
+      console.log('Full URL:', `${import.meta.env.VITE_API_URL}/user/login`);
+      console.log('Request data:', { name: username, password: password });
       console.log(result);
 
       const data: loginData = result.data;
