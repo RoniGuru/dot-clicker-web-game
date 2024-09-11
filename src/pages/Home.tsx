@@ -15,7 +15,6 @@ function Home() {
 
   useEffect(() => {
     setScore(user.score);
-    console.log('env', import.meta.env.VITE_API_URL);
   }, []);
 
   useEffect(() => {
