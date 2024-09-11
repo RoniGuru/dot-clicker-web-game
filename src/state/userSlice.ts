@@ -35,6 +35,8 @@ export const logInUser = createAsyncThunk(
         }
       );
 
+      console.log(result);
+
       const data: loginData = result.data;
 
       const returnedUser = {
