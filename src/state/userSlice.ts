@@ -22,10 +22,18 @@ export const logInUser = createAsyncThunk(
   'user/logInUser',
   async ({ username, password }: { username: string; password: string }) => {
     try {
-      const result = await api.post('/user/login', {
-        name: username,
-        password: password,
-      });
+      const result = await api.post(
+        '/user/login',
+        {
+          name: username,
+          password: password,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       const data: loginData = result.data;
 
