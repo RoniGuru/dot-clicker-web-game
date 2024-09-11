@@ -45,11 +45,23 @@ export const logInUser = createAsyncThunk(
         refreshToken: data.refreshToken,
       };
 
-      return returnedUser; // successful case
+      return returnedUser;
     } catch (err: any) {
-      console.error('Problem logging in user:', err);
+      // Enhance error logging
+      console.error('Problem logging in user:', {
+        message: err.message,
+        status: err.response?.status,
+        data: err.response?.data,
+      });
 
-      return err;
+      // Create a custom error object
+      const error: any = new Error(
+        err.response?.data?.message || 'An error occurred during login'
+      );
+      error.status = err.response?.status;
+      error.data = err.response?.data;
+
+      throw error;
     }
   }
 );
