@@ -5,7 +5,7 @@ import { RootState } from './state/store';
 import { refreshUserAccessToken } from './state/userSlice';
 import { AppDispatch } from './state/store';
 export const api = axios.create({
-  baseURL: import.meta.env.REACT_APP_VITE_API_URL,
+  baseURL: process.env.REACT_APP_VITE_API_URL,
 });
 
 async function refreshToken() {
@@ -15,7 +15,7 @@ async function refreshToken() {
 }
 
 export const tokenRoute = axios.create({
-  baseURL: import.meta.env.REACT_APP_VITE_API_URL,
+  baseURL: process.env.REACT_APP_VITE_API_URL,
 });
 
 tokenRoute.interceptors.request.use(
