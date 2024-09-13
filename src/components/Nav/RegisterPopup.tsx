@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import { api } from '../../api';
 
+function registerDetailsChecker(username: string, password: string) {
+  if (username.length <= 5) {
+    alert('username needs to be longer than 5 characters');
+    return false;
+  } else if (password.length <= 5) {
+    alert('password needs to be longer than 5 characters');
+    return false;
+  }
+  return true;
+}
+
 export const RegisterPopup = ({
   onClose,
   setLogin,
@@ -16,6 +27,9 @@ export const RegisterPopup = ({
     if (password != confirmPassword) {
       return alert("passwords don't match");
     }
+    const check = registerDetailsChecker(username, password);
+
+    if (!check) return;
 
     try {
       const result = await api.post('/user/register', {

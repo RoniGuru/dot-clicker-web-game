@@ -19,21 +19,26 @@ export const LoginPopup = ({
   async function handleLogin() {
     try {
       const result = await dispatch(logInUser({ username, password }));
+
       localStorage.clear();
 
-      const { accessToken, refreshToken } = result.payload as {
-        accessToken: string;
-        refreshToken: string;
-      };
+      if (result.payload) {
+        const { accessToken, refreshToken } = result.payload as {
+          accessToken: string;
+          refreshToken: string;
+        };
 
-      localStorage.setItem('token', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('token', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
 
-      if (logInUser.rejected.match(result)) {
-        alert(`Login failed: ${result.payload || 'Unknown error'}`);
+        if (logInUser.rejected.match(result)) {
+          alert(`Login failed: ${result.payload || 'Unknown error'}`);
+        }
+        navigate('/user');
+        onClose();
+      } else {
+        alert('Login details not valid');
       }
-      navigate('/user');
-      onClose();
     } catch (error: any) {
       console.error('Error logging in:', error);
       alert('Login details not valid');

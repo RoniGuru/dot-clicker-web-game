@@ -84,7 +84,6 @@ function UserHome() {
           <button
             onClick={() => {
               dispatch(endGame());
-
               setSeconds(0);
             }}
             className="px-10 py-6 rounded button text-2xl font-bold border-2 border-black transition-all duration-100 ease-out mt-2"
