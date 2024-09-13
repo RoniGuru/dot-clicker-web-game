@@ -6,16 +6,12 @@ interface user {
   id: number | null;
   name: string;
   score: number;
-  accessToken: string;
-  refreshToken: string;
 }
 
 export const initialState: user = {
   id: null,
   name: '',
   score: 0,
-  accessToken: '',
-  refreshToken: '',
 };
 
 export const logInUser = createAsyncThunk(
@@ -34,10 +30,6 @@ export const logInUser = createAsyncThunk(
           },
         }
       );
-      console.log('API URL:', import.meta.env.VITE_API_URL);
-      console.log('Full URL:', `${import.meta.env.VITE_API_URL}/user/login`);
-      console.log('Request data:', { name: username, password: password });
-      console.log(result);
 
       const data: loginData = result.data;
 
@@ -89,18 +81,10 @@ export const updateUserScore = createAsyncThunk(
   async ({ user, score }: { user: user; score: number }) => {
     try {
       console.log('updating user score');
-      await tokenRoute.put(
-        '/user/updateScore',
-        {
-          id: user.id,
-          score: score,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`, // Bearer token for authorization
-          },
-        }
-      );
+      await tokenRoute.put('/user/updateScore', {
+        id: user.id,
+        score: score,
+      });
       return user.score;
     } catch (err) {
       console.log('problem updating  user ', err);
@@ -114,38 +98,11 @@ export const updateUser = createAsyncThunk(
   async ({ user, score }: { user: user; score: number }) => {
     try {
       console.log('updating user score');
-      await tokenRoute.put(
-        '/user/updateScore',
-        {
-          id: user.id,
-          score: score,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`, // Bearer token for authorization
-          },
-        }
-      );
-      return user.score;
-    } catch (err) {
-      console.log('problem updating  user ', err);
-      throw err;
-    }
-  }
-);
-
-interface RefreshTokenResponse {
-  accessToken: string;
-}
-
-export const refreshUserAccessToken = createAsyncThunk(
-  'user/refreshToken',
-  async (user: user) => {
-    try {
-      const result = await api.put<RefreshTokenResponse>('/user/updateScore', {
-        refreshToken: user.refreshToken,
+      await tokenRoute.put('/user/updateScore', {
+        id: user.id,
+        score: score,
       });
-      return result.data.accessToken;
+      return user.score;
     } catch (err) {
       console.log('problem updating  user ', err);
       throw err;
@@ -163,26 +120,16 @@ const userSlice = createSlice({
         state.id = action.payload.id;
         state.name = action.payload.name;
         state.score = action.payload.score;
-        state.accessToken = action.payload.accessToken;
-        state.refreshToken = action.payload.refreshToken;
       })
       .addCase(logOutUser.fulfilled, (state) => {
         state.id = null;
         state.name = '';
         state.score = 0;
-        state.refreshToken = '';
-        state.accessToken = '';
       })
       .addCase(
         updateUserScore.fulfilled,
         (state, action: PayloadAction<number>) => {
           state.score = action.payload;
-        }
-      )
-      .addCase(
-        refreshUserAccessToken.fulfilled,
-        (state, action: PayloadAction<string>) => {
-          state.accessToken = action.payload;
         }
       );
   },

@@ -54,6 +54,13 @@ const Navbar = () => {
   );
 };
 
+interface LoginPayload {
+  id: number;
+  name: string;
+  score: number;
+  accessToken: string;
+  refreshToken: string;
+}
 const LoginPopup = ({
   onClose,
   setLogin,
@@ -66,12 +73,19 @@ const LoginPopup = ({
   const dispatch = useDispatch<AppDispatch>();
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-
   async function handleLogin() {
     try {
       const result = await dispatch(logInUser({ username, password }));
+      localStorage.clear();
 
-      console.log(result);
+      const { accessToken, refreshToken } = result.payload as {
+        accessToken: string;
+        refreshToken: string;
+      };
+
+      localStorage.setItem('token', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+
       if (logInUser.rejected.match(result)) {
         alert(`Login failed: ${result.payload || 'Unknown error'}`);
       }

@@ -1,17 +1,26 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from './state/store';
-import { refreshUserAccessToken } from './state/userSlice';
-import { AppDispatch } from './state/store';
+
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
 async function refreshToken() {
-  const user = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch<AppDispatch>();
-  await dispatch(refreshUserAccessToken(user));
+  try {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!refreshToken) {
+      throw new Error('No refresh token available');
+    }
+
+    const result = await api.put('/user/token', {
+      refreshToken: refreshToken,
+    });
+
+    localStorage.setItem('token', result.data.token);
+  } catch (err) {
+    console.log('problem updating  user ', err);
+    throw err;
+  }
 }
 
 export const tokenRoute = axios.create({
@@ -21,13 +30,19 @@ export const tokenRoute = axios.create({
 tokenRoute.interceptors.request.use(
   async (config) => {
     let currentDate = new Date();
-    const user = useSelector((state: RootState) => state.user);
-    const decodedToken = jwtDecode(user.accessToken);
+    let token = localStorage.getItem('token');
+
+    if (!token) {
+      throw new Error('No  token available');
+    }
+    config.headers['Authorization'] = `Bearer ${token}`;
+    const decodedToken = jwtDecode(token);
 
     if (decodedToken.exp) {
       if (decodedToken.exp * 1000 < currentDate.getTime()) {
         await refreshToken();
-        config.headers['authorization'] = 'Bearer ' + user.accessToken;
+        token = localStorage.getItem('token');
+        config.headers['authorization'] = 'Bearer ' + token;
       }
     }
 
