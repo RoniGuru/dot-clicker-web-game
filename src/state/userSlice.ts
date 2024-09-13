@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { api, tokenRoute } from '../api';
-import { loginData } from '../components/Navbar';
+import { loginData } from '../components/Nav/Navbar';
 
 interface user {
   id: number | null;

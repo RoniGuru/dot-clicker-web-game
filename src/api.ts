@@ -16,6 +16,8 @@ async function refreshToken() {
       refreshToken: refreshToken,
     });
 
+    //if result is expired  then log user out
+
     localStorage.setItem('token', result.data.token);
   } catch (err) {
     console.log('problem updating  user ', err);
