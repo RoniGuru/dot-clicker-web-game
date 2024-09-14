@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../state/store';
 import { AppDispatch } from '../../state/store';
 import { logOutUser } from '../../state/userSlice';
+import SettingDropDown from './Settings/SettingsDropDown';
 
 export interface loginData {
   accessToken: string;
@@ -27,7 +28,7 @@ const Navbar = () => {
       <nav className="flex w-full items-center justify-between p-4 text-l font-semibold ">
         <div>{user.id ? `Welcome ${user.name}` : ''}</div>
         {user.id ? (
-          <button onClick={handleLogOut}>Log Out</button>
+          <SettingDropDown user={user} />
         ) : (
           <button
             onClick={() => setIsPopupOpen(true)}

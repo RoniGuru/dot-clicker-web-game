@@ -2,7 +2,7 @@ import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { api, tokenRoute } from '../api';
 import { loginData } from '../components/Nav/Navbar';
 
-interface user {
+export interface user {
   id: number | null;
   name: string;
   score: number;
