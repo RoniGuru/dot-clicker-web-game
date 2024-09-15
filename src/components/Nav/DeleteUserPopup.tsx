@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../state/store';
+import { AppDispatch } from '../../state/store';
 import { deleteUser } from '@/state/userSlice';
 
 export function DeleteUserPopup({
