@@ -50,8 +50,14 @@ export const RegisterPopup = ({
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg flex flex-col gap-2 justify-center w-80">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white p-6 rounded-lg flex flex-col gap-2 justify-center w-80"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
           onClick={onClose}
           className="mt-1 px-4 py-1 rounded button font-bold border-2 border-black transition-all duration-100 ease-out   ml-auto "

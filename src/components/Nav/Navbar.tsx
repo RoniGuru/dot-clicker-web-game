@@ -20,9 +20,7 @@ const Navbar = () => {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
-  async function handleLogOut() {
-    dispatch(logOutUser(user.id!));
-  }
+
   return (
     <>
       <nav className="flex w-full items-center justify-between p-4 text-l font-semibold ">

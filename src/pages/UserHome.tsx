@@ -14,7 +14,7 @@ function UserHome() {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   const [seconds, setSeconds] = useState<number>(0);
-  const [score, setScore] = useState<number>(user.score);
+  const [score, setScore] = useState<number>(0);
 
   useEffect(() => {
     if (user.id) {
@@ -34,14 +34,13 @@ function UserHome() {
     }
     if (seconds == 0) {
       dispatch(endGame());
-      if (score > game.highScore) {
+      if (score > user.score) {
         dispatch(setHighScore(score));
         dispatch(updateUserScore({ user, score }));
       }
 
       setScore(0);
       setSeconds(game.timer);
-      localStorage.setItem('highScore', JSON.stringify(game.highScore));
     }
   }, [seconds, game.start]);
 
@@ -58,7 +57,7 @@ function UserHome() {
         {game.start && (
           <div className="mt-1 flex text-2xl font-bold justify-around items-center w-2/3">
             <div className={`${game.start ? 'w-48' : 'w-96 text-center'}`}>
-              High Score: {game.highScore}
+              High Score: {user.score}
             </div>
             <div className="h-24 w-24 rounded-full border-black border-8 flex justify-center items-center text-2xl font-bold">
               {seconds}

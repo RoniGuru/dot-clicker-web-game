@@ -28,9 +28,8 @@ function Home() {
     }
     if (seconds == 0) {
       dispatch(endGame());
-      if (score > game.highScore) {
+      if (score > game.highScore && score != 0) {
         dispatch(setHighScore(score));
-        dispatch(updateUserScore({ user, score }));
       }
 
       setScore(0);

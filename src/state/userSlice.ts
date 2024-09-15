@@ -110,6 +110,29 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+export const deleteUser = createAsyncThunk(
+  'user/updateUser',
+  async ({ name, password }: { name: string; password: string }) => {
+    try {
+      console.log('deleting user ');
+      const result = await tokenRoute.delete('/user/delete', {
+        data: {
+          name: name,
+          password: password,
+        },
+      });
+
+      if (result.status === 401) {
+        return false;
+      }
+      return true;
+    } catch (err) {
+      console.log('problem deleting  user ', err);
+      throw err;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -130,6 +153,16 @@ const userSlice = createSlice({
         updateUserScore.fulfilled,
         (state, action: PayloadAction<number>) => {
           state.score = action.payload;
+        }
+      )
+      .addCase(
+        deleteUser.fulfilled,
+        (state, action: PayloadAction<boolean>) => {
+          if (action.payload) {
+            state.id = null;
+            state.name = '';
+            state.score = 0;
+          }
         }
       );
   },
