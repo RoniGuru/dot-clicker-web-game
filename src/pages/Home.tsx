@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startGame, endGame, setHighScore } from '../state/gameSlice';
 import { AppDispatch } from '../state/store';
-import { updateUserScore } from '../state/userSlice';
+
 import Game from '../components/Game';
 
 function Home() {
