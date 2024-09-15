@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { api, tokenRoute } from '../api';
-import { loginData } from '../components/Nav/Navbar';
+
+import * as userAPI from '../api/user';
 
 export interface user {
   id: number | null;
@@ -14,24 +14,17 @@ export const initialState: user = {
   score: 0,
 };
 
+interface LoginResponse {
+  user: user;
+  accessToken: string;
+  refreshToken: string;
+}
 export const logInUser = createAsyncThunk(
   'user/logInUser',
   async ({ username, password }: { username: string; password: string }) => {
     try {
-      const result = await api.post(
-        '/user/login',
-        {
-          name: username,
-          password: password,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      const data: loginData = result.data;
+      const response = await userAPI.loginUser(username, password);
+      const data: LoginResponse = response.data;
 
       const returnedUser = {
         id: data.user.id,
@@ -43,14 +36,12 @@ export const logInUser = createAsyncThunk(
 
       return returnedUser;
     } catch (err: any) {
-      // Enhance error logging
       console.error('Problem logging in user:', {
         message: err.message,
         status: err.response?.status,
         data: err.response?.data,
       });
 
-      // Create a custom error object
       const error: any = new Error(
         err.response?.data?.message || 'An error occurred during login'
       );
@@ -66,9 +57,7 @@ export const logOutUser = createAsyncThunk(
   'user/logOutUser',
   async (id: number) => {
     try {
-      await api.post('/user/logout', {
-        id: id,
-      });
+      await userAPI.logoutUser(id);
     } catch (err) {
       console.log('problem logging out  user ', err);
       throw err;
@@ -80,12 +69,8 @@ export const updateUserScore = createAsyncThunk(
   'user/updateUserScore',
   async ({ user, score }: { user: user; score: number }) => {
     try {
-      console.log('updating user score');
-      await tokenRoute.put('/user/updateScore', {
-        id: user.id,
-        score: score,
-      });
-      return user.score;
+      await userAPI.updateUserScore(user.id!, score);
+      return score;
     } catch (err) {
       console.log('problem updating  user ', err);
       throw err;
@@ -93,39 +78,14 @@ export const updateUserScore = createAsyncThunk(
   }
 );
 
-export const updateUser = createAsyncThunk(
-  'user/updateUser',
-  async ({ user, score }: { user: user; score: number }) => {
-    try {
-      console.log('updating user score');
-      await tokenRoute.put('/user/updateScore', {
-        id: user.id,
-        score: score,
-      });
-      return user.score;
-    } catch (err) {
-      console.log('problem updating  user ', err);
-      throw err;
-    }
-  }
-);
+export const updateUser = createAsyncThunk('user/updateUser', async () => {});
 
 export const deleteUser = createAsyncThunk(
   'user/updateUser',
   async ({ name, password }: { name: string; password: string }) => {
     try {
-      console.log('deleting user ');
-      const result = await tokenRoute.delete('/user/delete', {
-        data: {
-          name: name,
-          password: password,
-        },
-      });
-
-      if (result.status === 401) {
-        return false;
-      }
-      return true;
+      const result = await userAPI.deleteUser(name, password);
+      return result.status !== 401;
     } catch (err) {
       console.log('problem deleting  user ', err);
       throw err;

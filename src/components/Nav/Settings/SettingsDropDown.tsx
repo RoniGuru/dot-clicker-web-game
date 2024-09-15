@@ -23,9 +23,11 @@ function SettingDropDown({ user }: { user: user }) {
   return (
     <div>
       <DropdownMenu>
-        <DropdownMenuTrigger>Setting</DropdownMenuTrigger>
+        <DropdownMenuTrigger className="px-4 py-1   rounded button font-bold border-2 border-black transition-all duration-100 ease-out">
+          Setting
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>Update User</DropdownMenuItem>
+          {/* <DropdownMenuItem>Update User</DropdownMenuItem> */}
           <DropdownMenuItem onClick={() => setIsDeletePopupOpen(true)}>
             Delete User
           </DropdownMenuItem>

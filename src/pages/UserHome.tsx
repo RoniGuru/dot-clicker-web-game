@@ -54,6 +54,11 @@ function UserHome() {
         >
           Dot Clicker
         </h1>
+        <div
+          className={`text-1xl font-bold text-center ${game.start && 'hidden'}`}
+        >
+          Current High Score : {user.score}
+        </div>
         {game.start && (
           <div className="mt-1 flex text-2xl font-bold justify-around items-center w-2/3">
             <div className={`${game.start ? 'w-48' : 'w-96 text-center'}`}>

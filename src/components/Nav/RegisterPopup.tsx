@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { api } from '../../api';
+import * as userAPI from '../../api/user';
 
 function registerDetailsChecker(username: string, password: string) {
   if (username.length <= 5) {
@@ -32,10 +32,7 @@ export const RegisterPopup = ({
     if (!check) return;
 
     try {
-      const result = await api.post('/user/register', {
-        name: username,
-        password: password,
-      });
+      const result = await userAPI.registerUser(username, password);
 
       console.log(result);
     } catch (error) {
