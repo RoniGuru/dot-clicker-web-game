@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { UpdateUserPopup } from './UpdateUserPopup';
 import { AppDispatch } from '../../state/store';
 import { logOutUser } from '../../state/userSlice';
-
+import LeaderBoardPopup from './LeaderBoard';
 export interface loginData {
   accessToken: string;
   refreshToken: string;
@@ -25,6 +25,7 @@ const Navbar = () => {
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
   const [isUpdatePopupOpen, setIsUpdatePopupOpen] = useState(false);
+  const [isLeaderBoardOpen, setIsLeaderBoardOpen] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
   async function handleLogOut() {
@@ -38,6 +39,12 @@ const Navbar = () => {
         <div>{user.id ? `Welcome ${user.name}` : ''}</div>
         {user.id ? (
           <div className="flex gap-10 mr-4">
+            <div
+              onClick={() => setIsLeaderBoardOpen(true)}
+              className="px-4 py-1   rounded button font-bold border-2 border-black transition-all duration-100 ease-out"
+            >
+              LeaderBoard
+            </div>
             <div
               onClick={() => setIsUpdatePopupOpen(true)}
               className="px-4 py-1   rounded button font-bold border-2 border-black transition-all duration-100 ease-out"
@@ -89,6 +96,9 @@ const Navbar = () => {
           onClose={() => setIsUpdatePopupOpen(false)}
           user={user}
         />
+      ) : null}
+      {isLeaderBoardOpen ? (
+        <LeaderBoardPopup onClose={() => setIsLeaderBoardOpen(true)} />
       ) : null}
     </>
   );

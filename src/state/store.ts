@@ -3,6 +3,7 @@ import gameSliceReducer from './gameSlice';
 import userSliceReducer from './userSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import leaderBoardReducer from './leaderBoardSlice';
 const persistConfig = {
   key: 'root',
   storage,
@@ -12,6 +13,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   game: gameSliceReducer,
   user: userSliceReducer,
+  leaderBoard: leaderBoardReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

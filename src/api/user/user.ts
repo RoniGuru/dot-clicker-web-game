@@ -1,3 +1,4 @@
+import { error } from 'console';
 import { api, tokenRoute } from './config';
 
 export async function getNewToken() {
@@ -67,4 +68,15 @@ export const updateUserPassword = async (
     newPassword: newPassword,
     name: name,
   });
+};
+
+export const getLeaderBoard = async () => {
+  try {
+    const result = await api.get('/user/leaderBoard');
+
+    return result.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
 };
