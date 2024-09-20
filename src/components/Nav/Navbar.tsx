@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../state/store';
 import { DeleteUserPopup } from './DeleteUserPopup';
 import { useDispatch } from 'react-redux';
-
+import { UpdateUserPopup } from './UpdateUserPopup';
 import { AppDispatch } from '../../state/store';
 import { logOutUser } from '../../state/userSlice';
 
@@ -24,6 +24,8 @@ const Navbar = () => {
 
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
+  const [isUpdatePopupOpen, setIsUpdatePopupOpen] = useState(false);
+
   const dispatch = useDispatch<AppDispatch>();
   async function handleLogOut() {
     dispatch(logOutUser(user.id!));
@@ -36,6 +38,12 @@ const Navbar = () => {
         <div>{user.id ? `Welcome ${user.name}` : ''}</div>
         {user.id ? (
           <div className="flex gap-10 mr-4">
+            <div
+              onClick={() => setIsUpdatePopupOpen(true)}
+              className="px-4 py-1   rounded button font-bold border-2 border-black transition-all duration-100 ease-out"
+            >
+              Update User
+            </div>
             <div
               onClick={() => setIsDeletePopupOpen(true)}
               className="px-4 py-1   rounded button font-bold border-2 border-black transition-all duration-100 ease-out"
@@ -74,6 +82,12 @@ const Navbar = () => {
         <DeleteUserPopup
           onClose={() => setIsDeletePopupOpen(false)}
           name={user.name}
+        />
+      ) : null}
+      {isUpdatePopupOpen ? (
+        <UpdateUserPopup
+          onClose={() => setIsUpdatePopupOpen(false)}
+          user={user}
         />
       ) : null}
     </>

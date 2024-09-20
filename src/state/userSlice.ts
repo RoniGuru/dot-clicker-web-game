@@ -78,7 +78,50 @@ export const updateUserScore = createAsyncThunk(
   }
 );
 
-export const updateUser = createAsyncThunk('user/updateUser', async () => {});
+export const updateUserName = createAsyncThunk(
+  'user/updateUserName',
+  async ({
+    id,
+    name,
+    newName,
+    password,
+  }: {
+    id: number;
+    name: string;
+    password: string;
+    newName: string;
+  }) => {
+    try {
+      await userAPI.updateUserName(id, password, newName, name);
+      return newName;
+    } catch (err) {
+      console.log('problem updating  user name', err);
+      throw err;
+    }
+  }
+);
+
+export const updateUserPassword = createAsyncThunk(
+  'user/updateUserPassword',
+  async ({
+    id,
+    name,
+    newPassword,
+    password,
+  }: {
+    id: number;
+    name: string;
+    password: string;
+    newPassword: string;
+  }) => {
+    try {
+      await userAPI.updateUserPassword(id, password, newPassword, name);
+    } catch (err) {
+      console.log('problem updating  user password', err);
+      throw err;
+    }
+  }
+);
 
 export const deleteUser = createAsyncThunk(
   'user/updateUser',
@@ -124,7 +167,14 @@ const userSlice = createSlice({
             state.score = 0;
           }
         }
-      );
+      )
+      .addCase(
+        updateUserName.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.name = action.payload;
+        }
+      )
+      .addCase(updateUserPassword.fulfilled, () => {});
   },
 });
 

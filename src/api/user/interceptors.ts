@@ -1,16 +1,14 @@
 import { tokenRoute } from './config';
 import { getNewToken } from './user';
 
-tokenRoute.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+tokenRoute.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
+});
 
 tokenRoute.interceptors.response.use(
   (response) => response,
@@ -20,9 +18,8 @@ tokenRoute.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const newToken = await getNewToken();
-        tokenRoute.defaults.headers.common[
-          'Authorization'
-        ] = `Bearer ${newToken}`;
+        localStorage.setItem('token', newToken);
+        originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
         return tokenRoute(originalRequest);
       } catch (refreshError) {
         // Handle refresh token failure (e.g., logout user)

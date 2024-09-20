@@ -11,8 +11,7 @@ export async function getNewToken() {
       refreshToken: refreshToken,
     });
 
-    localStorage.setItem('token', result.data.token);
-    return result.data.token;
+    return result.data.accessToken;
   } catch (err) {
     console.log('problem getting token  ', err);
     throw err;
@@ -40,4 +39,32 @@ export const updateUserScore = async (id: number, score: number) => {
 
 export const deleteUser = async (name: string, password: string) => {
   return tokenRoute.delete('/user/delete', { data: { name, password } });
+};
+
+export const updateUserName = async (
+  id: number,
+  password: string,
+  newName: string,
+  name: string
+) => {
+  return tokenRoute.put('/user/updateName', {
+    id: id,
+    password: password,
+    newName: newName,
+    name: name,
+  });
+};
+
+export const updateUserPassword = async (
+  id: number,
+  password: string,
+  newPassword: string,
+  name: string
+) => {
+  return tokenRoute.put('/user/updatePassword', {
+    id: id,
+    password: password,
+    newPassword: newPassword,
+    name: name,
+  });
 };
