@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as userAPI from '../api/user';
-import { act } from 'react';
 
 export interface rank {
   username: string;

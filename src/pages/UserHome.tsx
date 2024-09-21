@@ -17,9 +17,7 @@ function UserHome() {
   const [score, setScore] = useState<number>(0);
 
   useEffect(() => {
-    if (user.id) {
-      setScore(user.score);
-    } else {
+    if (!user.id) {
       navigate('/');
     }
   }, []);
@@ -33,8 +31,10 @@ function UserHome() {
       return () => clearInterval(interval);
     }
     if (seconds == 0) {
+      console.log('end game');
       dispatch(endGame());
       if (score > user.score) {
+        console.log('score updated');
         dispatch(setHighScore(score));
         dispatch(updateUserScore({ user, score }));
       }

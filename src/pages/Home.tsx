@@ -8,15 +8,10 @@ import Game from '../components/Game';
 
 function Home() {
   const game = useSelector((state: RootState) => state.game);
-  const user = useSelector((state: RootState) => state.user);
+
   const dispatch = useDispatch<AppDispatch>();
   const [seconds, setSeconds] = useState<number>(0);
-  const [score, setScore] = useState<number>(user.score);
-
-  useEffect(() => {
-    setScore(user.score);
-    console.log('url ', import.meta.env.VITE_API_URL);
-  }, []);
+  const [score, setScore] = useState<number>(0);
 
   useEffect(() => {
     if (seconds > 0 && game.start) {

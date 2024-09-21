@@ -28,6 +28,7 @@ export function UpdateUserPopup({
       const name = user.name;
       await dispatch(updateUserName({ id, name, newName: newName, password }));
     }
+    onClose();
   }
 
   return (

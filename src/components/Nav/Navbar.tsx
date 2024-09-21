@@ -98,7 +98,7 @@ const Navbar = () => {
         />
       ) : null}
       {isLeaderBoardOpen ? (
-        <LeaderBoardPopup onClose={() => setIsLeaderBoardOpen(true)} />
+        <LeaderBoardPopup onClose={() => setIsLeaderBoardOpen(false)} />
       ) : null}
     </>
   );
