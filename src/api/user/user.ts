@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { api, tokenRoute } from './config';
 
 export async function getNewToken() {
