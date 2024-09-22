@@ -1,0 +1,8 @@
+{
+    "globalHeaders": {
+      "content-type": "application/javascript"
+    },
+    "mimeTypes": {
+      ".js": "application/javascript"
+    }
+  }
