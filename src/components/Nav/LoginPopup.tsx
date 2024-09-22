@@ -36,8 +36,6 @@ export const LoginPopup = ({
         }
         navigate('/user');
         onClose();
-      } else {
-        alert('Login details not valid');
       }
     } catch (error: any) {
       console.error('Error logging in:', error);

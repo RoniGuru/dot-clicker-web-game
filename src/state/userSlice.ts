@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import * as userAPI from '../api/user';
+import { AxiosError, isAxiosError } from 'axios';
 
 export interface user {
   id: number | null;
@@ -36,19 +37,12 @@ export const logInUser = createAsyncThunk(
 
       return returnedUser;
     } catch (err: any) {
-      console.error('Problem logging in user:', {
-        message: err.message,
-        status: err.response?.status,
-        data: err.response?.data,
-      });
+      if (isAxiosError(err)) {
+        const axiosError = err as AxiosError;
+        alert(axiosError.response!.data);
+      }
 
-      const error: any = new Error(
-        err.response?.data?.message || 'An error occurred during login'
-      );
-      error.status = err.response?.status;
-      error.data = err.response?.data;
-
-      throw error;
+      throw err;
     }
   }
 );
@@ -72,6 +66,10 @@ export const updateUserScore = createAsyncThunk(
       await userAPI.updateUserScore(user.id!, score);
       return score;
     } catch (err) {
+      if (isAxiosError(err)) {
+        const axiosError = err as AxiosError;
+        alert(axiosError.response!.data);
+      }
       console.log('problem updating  user ', err);
       throw err;
     }
@@ -94,8 +92,13 @@ export const updateUserName = createAsyncThunk(
     try {
       await userAPI.updateUserName(id, password, newName, name);
       return newName;
-    } catch (err) {
+    } catch (err: any) {
+      if (isAxiosError(err)) {
+        const axiosError = err as AxiosError;
+        alert(axiosError.response!.data);
+      }
       console.log('problem updating  user name', err);
+
       throw err;
     }
   }
@@ -117,6 +120,10 @@ export const updateUserPassword = createAsyncThunk(
     try {
       await userAPI.updateUserPassword(id, password, newPassword, name);
     } catch (err) {
+      if (isAxiosError(err)) {
+        const axiosError = err as AxiosError;
+        alert(axiosError.response!.data);
+      }
       console.log('problem updating  user password', err);
       throw err;
     }
@@ -130,6 +137,10 @@ export const deleteUser = createAsyncThunk(
       const result = await userAPI.deleteUser(name, password);
       return result.status !== 401;
     } catch (err) {
+      if (isAxiosError(err)) {
+        const axiosError = err as AxiosError;
+        alert(axiosError.response!.data);
+      }
       console.log('problem deleting  user ', err);
       throw err;
     }

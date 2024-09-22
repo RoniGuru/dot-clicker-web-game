@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../state/store';
 import { updateUserName, updateUserPassword } from '../../state/userSlice';
 import { user } from '../../state/userSlice';
+import { checkPassword, checkUsername } from '../../util/detailsChecker';
 
 export function UpdateUserPopup({
   onClose,
@@ -20,13 +21,28 @@ export function UpdateUserPopup({
 
   async function handleUpdate() {
     if (update === 'password') {
+      if (!checkPassword(newPassword)) return;
       const id = user.id as number;
       const name = user.name;
-      await dispatch(updateUserPassword({ id, name, newPassword, password }));
+
+      try {
+        await dispatch(updateUserPassword({ id, name, newPassword, password }));
+      } catch (err) {
+        console.log('error', err);
+        throw err;
+      }
     } else {
+      if (!checkUsername(newName)) return;
       const id = user.id as number;
       const name = user.name;
-      await dispatch(updateUserName({ id, name, newName: newName, password }));
+      try {
+        await dispatch(
+          updateUserName({ id, name, newName: newName, password })
+        );
+      } catch (err) {
+        console.log(err);
+        throw err;
+      }
     }
     onClose();
   }
