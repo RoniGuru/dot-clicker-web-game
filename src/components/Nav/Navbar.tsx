@@ -16,7 +16,7 @@ export interface loginData {
 }
 
 const Navbar = () => {
-  const user = useSelector((state: RootState) => state.user.user);
+  const user = useSelector((state: RootState) => state.userData.user);
 
   const [login, setLogin] = useState<boolean>(true);
 

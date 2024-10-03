@@ -11,7 +11,7 @@ function UserHome() {
   const navigate = useNavigate();
 
   const game = useSelector((state: RootState) => state.game);
-  const user = useSelector((state: RootState) => state.user.user);
+  const user = useSelector((state: RootState) => state.userData.user);
   const dispatch = useDispatch<AppDispatch>();
   const [seconds, setSeconds] = useState<number>(0);
   const [score, setScore] = useState<number>(0);

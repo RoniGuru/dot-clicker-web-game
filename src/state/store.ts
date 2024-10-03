@@ -12,7 +12,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   game: gameSliceReducer,
-  user: userSliceReducer,
+  userData: userSliceReducer,
   leaderBoard: leaderBoardReducer,
 });
 
