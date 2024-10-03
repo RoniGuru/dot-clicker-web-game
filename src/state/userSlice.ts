@@ -8,11 +8,14 @@ export interface user {
   name: string;
   score: number;
 }
+export interface userData {
+  user: user;
+  loading: boolean;
+}
 
-export const initialState: user = {
-  id: null,
-  name: '',
-  score: 0,
+export const initialState: userData = {
+  user: { id: null, name: '', score: 0 },
+  loading: false,
 };
 
 interface LoginResponse {
@@ -153,36 +156,45 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(logInUser.pending, (state) => {
+        state.loading = false;
+      })
       .addCase(logInUser.fulfilled, (state, action: PayloadAction<user>) => {
-        state.id = action.payload.id;
-        state.name = action.payload.name;
-        state.score = action.payload.score;
+        state.user.id = action.payload.id;
+        state.user.name = action.payload.name;
+        state.user.score = action.payload.score;
+      })
+      .addCase(logOutUser.pending, (state) => {
+        state.loading = false;
       })
       .addCase(logOutUser.fulfilled, (state) => {
-        state.id = null;
-        state.name = '';
-        state.score = 0;
+        state.user.id = null;
+        state.user.name = '';
+        state.user.score = 0;
       })
       .addCase(
         updateUserScore.fulfilled,
         (state, action: PayloadAction<number>) => {
-          state.score = action.payload;
+          state.user.score = action.payload;
         }
       )
+      .addCase(updateUserScore.pending, (state) => {
+        state.loading = false;
+      })
       .addCase(
         deleteUser.fulfilled,
         (state, action: PayloadAction<boolean>) => {
           if (action.payload) {
-            state.id = null;
-            state.name = '';
-            state.score = 0;
+            state.user.id = null;
+            state.user.name = '';
+            state.user.score = 0;
           }
         }
       )
       .addCase(
         updateUserName.fulfilled,
         (state, action: PayloadAction<string>) => {
-          state.name = action.payload;
+          state.user.name = action.payload;
         }
       )
       .addCase(updateUserPassword.fulfilled, () => {});

@@ -7,6 +7,7 @@ export interface rank {
 }
 export interface ranking {
   ranks: rank[];
+  loading: boolean;
 }
 
 export const getLeaderBoard = createAsyncThunk(
@@ -24,6 +25,7 @@ export const getLeaderBoard = createAsyncThunk(
 );
 export const initialState: ranking = {
   ranks: [],
+  loading: false,
 };
 
 const leaderBoardSlice = createSlice({
@@ -31,12 +33,17 @@ const leaderBoardSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      getLeaderBoard.fulfilled,
-      (state, action: PayloadAction<rank[]>) => {
-        state.ranks = action.payload;
-      }
-    );
+    builder
+      .addCase(getLeaderBoard.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        getLeaderBoard.fulfilled,
+        (state, action: PayloadAction<rank[]>) => {
+          state.ranks = action.payload;
+          state.loading = false;
+        }
+      );
   },
 });
 

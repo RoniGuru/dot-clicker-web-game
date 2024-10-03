@@ -7,6 +7,7 @@ export default function RootLayout({
   return (
     <div className=" max-h-screen">
       <Navbar />
+
       <main className="flex-grow overflow-hidden">{children}</main>
     </div>
   );

@@ -3,6 +3,7 @@ import { AppDispatch } from '../../state/store';
 import { RootState } from '../../state/store';
 import { getLeaderBoard } from '../../state/leaderBoardSlice';
 import { useEffect } from 'react';
+import Loading from '../Loading';
 
 function LeaderBoardPopup({ onClose }: { onClose: () => void }) {
   useEffect(() => {
@@ -19,6 +20,7 @@ function LeaderBoardPopup({ onClose }: { onClose: () => void }) {
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       onClick={onClose}
     >
+      {rankings.loading ? <Loading /> : null}
       <div
         className="bg-white p-6 rounded-lg flex flex-col gap-2 justify-center w-80 "
         onClick={(e) => e.stopPropagation()}
